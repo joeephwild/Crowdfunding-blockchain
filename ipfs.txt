@@ -1,0 +1,35 @@
+import React from 'react';
+import IPFS from 'ipfs-http-client';
+
+const App = () => {
+  const [data, setData] = useState(null);
+
+  const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Get the input data from the form
+    const inputData = e.target.inputData.value;
+
+    // Add the data to IPFS
+    const filesAdded = await ipfs.add({
+      path: 'my-file.txt',
+      content: Buffer.from(inputData)
+    });
+
+    // Set the data in state so that it can be displayed in the app
+    setData(filesAdded[0].path);
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="inputData">Enter some data to add to IPFS:</label>
+        <input type="text" id="inputData" />
+        <button type="submit">Add to IPFS</button>
+      </form>
+      {data && <p>Data added to IPFS: {data}</p>}
+    </div>
+  );
+};
