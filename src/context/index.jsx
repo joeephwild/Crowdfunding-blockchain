@@ -19,6 +19,7 @@ export const StateProvider = ({ children }) => {
         address, // owner
         form.title, // title
         form.description, // description
+        form.category,
         form.target,
         new Date(form.deadline).getTime(), // deadline,
         form.image
@@ -37,6 +38,7 @@ export const StateProvider = ({ children }) => {
       owner: campaign.owner,
       title: campaign.title,
       description: campaign.description,
+      category: campaign.category,
       target: ethers.utils.formatEther(campaign.target.toString()),
       deadline: campaign.deadline.toNumber(),
       amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
